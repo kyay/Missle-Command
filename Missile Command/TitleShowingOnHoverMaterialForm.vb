@@ -1,5 +1,7 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.Collections.Specialized
 Imports System.Drawing.Drawing2D
+Imports System.Reflection
 Imports MaterialSkin.Controls
 
 Public Class TitleShowingOnHoverMaterialForm
@@ -7,7 +9,18 @@ Public Class TitleShowingOnHoverMaterialForm
 	Private intTitleOffset = -40
 	Private rectTitle As Rectangle = New Rectangle(0, 24, 0, 40)
 	Private dblTitleTransitionRate60FPS As Double
-	Public ReadOnly arrAppBarButtons As ObservableCollection(Of PictureBox) = New ObservableCollection(Of PictureBox)
+	Public arrAppBarButtons As ObservableCollection(Of MaterialPictureButton) = New ObservableCollection(Of MaterialPictureButton)
+
+	Public Sub New()
+		MyBase.New()
+		InitializeComponent()
+		AddHandler arrAppBarButtons.CollectionChanged,
+			Sub(sender As Object, notifyEvent As NotifyCollectionChangedEventArgs)
+				For Each picButton As MaterialPictureButton In notifyEvent.NewItems
+					picButton.TranslationY = -40
+				Next
+			End Sub
+	End Sub
 
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
 		Dim g = e.Graphics
@@ -43,14 +56,14 @@ Public Class TitleShowingOnHoverMaterialForm
 		End If
 		If intOffsetChange <> 0 Then
 			For Each picButton In arrAppBarButtons
-				picButton.Top += intOffsetChange
+				picButton.TranslationY += intOffsetChange
 			Next
 		End If
 	End Sub
 
 	Protected Overrides Sub OnLoad(e As EventArgs)
 		MyBase.OnLoad(e)
-		tmrDisplaceTitle.Start()
 		dblTitleTransitionRate60FPS = 40 / (100 / tmrDisplaceTitle.Interval)
+		tmrDisplaceTitle.Start()
 	End Sub
 End Class

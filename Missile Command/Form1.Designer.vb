@@ -24,12 +24,13 @@ Partial Class Form1
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
-		Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+		Me.PictureBox1 = New MaterialPictureButton()
 		CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'PictureBox1
 		'
+		Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
 		Me.PictureBox1.Location = New System.Drawing.Point(764, 30)
 		Me.PictureBox1.Name = "PictureBox1"
 		Me.PictureBox1.Size = New System.Drawing.Size(24, 24)
@@ -50,5 +51,5 @@ Partial Class Form1
 
 	End Sub
 
-	Friend WithEvents PictureBox1 As PictureBox
+	Friend WithEvents PictureBox1 As MaterialPictureButton
 End Class
