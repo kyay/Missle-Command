@@ -25,9 +25,9 @@
 			Left += TranslationX
 			Dim pntLocation = _originalDisplayRectangle.Location
 			pntLocation.X = OriginalLeft
-			_originalDisplayRectangle.Location = pntLocation
-			Invalidate(OriginalDisplayRectangle)
-		End Set
+            _originalDisplayRectangle.Location = pntLocation
+            Me.Invalidate()
+        End Set
 	End Property
 	Private _translationY As Integer
 	Public Property TranslationY() As Integer
@@ -39,12 +39,12 @@
 			Top += TranslationY
 			Dim pntLocation = _originalDisplayRectangle.Location
 			pntLocation.Y = OriginalTop
-			_originalDisplayRectangle.Location = pntLocation
-			Invalidate(OriginalDisplayRectangle)
-		End Set
+            _originalDisplayRectangle.Location = pntLocation
+            Me.Invalidate()
+        End Set
 	End Property
 	Protected Overrides Sub OnPaint(pe As PaintEventArgs)
 		pe.Graphics.SetClip(OriginalDisplayRectangle)
-		'MyBase.OnPaint(pe)
-	End Sub
+        MyBase.OnPaint(pe)
+    End Sub
 End Class
