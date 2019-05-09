@@ -45,6 +45,6 @@
 	End Property
 	Protected Overrides Sub OnPaint(pe As PaintEventArgs)
 		pe.Graphics.SetClip(OriginalDisplayRectangle)
-		MyBase.OnPaint(pe)
+		'MyBase.OnPaint(pe)
 	End Sub
 End Class
