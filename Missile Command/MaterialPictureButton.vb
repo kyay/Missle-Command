@@ -31,8 +31,9 @@
 			Invalidate()
 		End Set
 	End Property
+
 	Protected Overrides Sub OnPaint(pe As PaintEventArgs)
-		pe.Graphics.TranslateClip(TranslationX, TranslationY)
+		pe.Graphics.TranslateClip(-TranslationX, -TranslationY)
 		MyBase.OnPaint(pe)
 	End Sub
 End Class
