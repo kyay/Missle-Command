@@ -24,18 +24,22 @@ Partial Class Form1
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
-		Me.PictureBox1 = New MaterialPictureButton()
+		Me.PictureBox1 = New Missile_Command.MaterialPictureButton()
 		CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
 		'PictureBox1
 		'
 		Me.PictureBox1.BackColor = System.Drawing.Color.Transparent
+		Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
 		Me.PictureBox1.Location = New System.Drawing.Point(764, 30)
 		Me.PictureBox1.Name = "PictureBox1"
+		Me.PictureBox1.Padding = New System.Windows.Forms.Padding(0, 8, 0, 8)
 		Me.PictureBox1.Size = New System.Drawing.Size(24, 24)
 		Me.PictureBox1.TabIndex = 0
 		Me.PictureBox1.TabStop = False
+		Me.PictureBox1.TranslationX = 0
+		Me.PictureBox1.TranslationY = 0
 		'
 		'Form1
 		'
