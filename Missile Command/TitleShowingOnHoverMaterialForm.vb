@@ -54,6 +54,8 @@ Public Class TitleShowingOnHoverMaterialForm
 			intTitleOffset += intOffsetChange
 			Invalidate(rectTitle)
 		End If
+		Update()
+
 		If intOffsetChange <> 0 Then
 			For Each picButton In arrAppBarButtons
 				picButton.TranslationY += intOffsetChange

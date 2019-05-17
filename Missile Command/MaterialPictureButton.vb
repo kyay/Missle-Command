@@ -15,7 +15,7 @@
 			Return _translationX
 		End Get
 		Set(ByVal value As Integer)
-			Left = OriginalLeft + value
+			'Left = OriginalLeft + value
 			_translationX = value
 			Invalidate()
 		End Set
@@ -26,14 +26,15 @@
 			Return _translationY
 		End Get
 		Set(ByVal value As Integer)
-			Top = OriginalTop + value
+			'Top = OriginalTop + value
 			_translationY = value
 			Invalidate()
+			Update()
 		End Set
 	End Property
 
 	Protected Overrides Sub OnPaint(pe As PaintEventArgs)
-		pe.Graphics.TranslateClip(-TranslationX, -TranslationY)
+		pe.Graphics.TranslateClip(TranslationX, TranslationY)
 		MyBase.OnPaint(pe)
 	End Sub
 End Class
