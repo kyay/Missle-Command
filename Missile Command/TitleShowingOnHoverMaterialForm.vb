@@ -48,13 +48,11 @@ Public Class TitleShowingOnHoverMaterialForm
 		If blnAdd AndAlso intTitleOffset < 0 Then
 			intOffsetChange = Math.Min(0 - intTitleOffset, dblTitleTransitionRate60FPS)
 			intTitleOffset += intOffsetChange
-			Invalidate(rectTitle, True)
-			Update()
+			Invalidate(rectTitle)
 		ElseIf Not blnAdd AndAlso intTitleOffset > -40 Then
 			intOffsetChange = -Math.Min(intTitleOffset + 40, dblTitleTransitionRate60FPS)
 			intTitleOffset += intOffsetChange
-			Invalidate(rectTitle, True)
-			Update()
+			Invalidate(rectTitle)
 		End If
 		If intOffsetChange <> 0 Then
 			For Each picButton In arrAppBarButtons
