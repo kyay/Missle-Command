@@ -25,7 +25,9 @@ Public Class Form1
 		ClientRect.Y += PictureBox1.Padding.Top
 		ClientRect.Width -= PictureBox1.Padding.Horizontal
 		ClientRect.Height -= PictureBox1.Padding.Vertical
-		e.Graphics.DrawImage(image.Draw(ClientRect.Width, ClientRect.Height), ClientRect)
+		Dim btmImage = image.Draw(ClientRect.Width, ClientRect.Height)
+		btmImage.MakeTransparent()
+		e.Graphics.DrawImage(btmImage, ClientRect)
 	End Sub
 
 	Private Sub PictureBox1_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PictureBox1.Resize

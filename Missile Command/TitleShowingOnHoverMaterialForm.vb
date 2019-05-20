@@ -13,6 +13,10 @@ Public Class TitleShowingOnHoverMaterialForm
 
 	Public Sub New()
 		MyBase.New()
+		SetStyle(ControlStyles.UserPaint, True)
+		SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+		SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+		SetStyle(ControlStyles.SupportsTransparentBackColor, True)
 		InitializeComponent()
 		AddHandler arrAppBarButtons.CollectionChanged,
 			Sub(sender As Object, notifyEvent As NotifyCollectionChangedEventArgs)
@@ -23,12 +27,28 @@ Public Class TitleShowingOnHoverMaterialForm
 	End Sub
 
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
+		'Dim g = e.Graphics
+		'Dim test As Bitmap = New Bitmap(Width, Height)
+		'Dim g2 = Graphics.FromImage(test)
+		'Dim e2 = New PaintEventArgs(g2, e.ClipRectangle)
+		'g2.ExcludeClip(rectTitle)
+		'MyBase.OnPaint(e2)
+		'g2.SetClip(rectTitle)
+		'g2.TranslateTransform(0, intTitleOffset)
+		'MyBase.OnPaint(e2)
+
 		Dim g = e.Graphics
 		g.ExcludeClip(rectTitle)
 		MyBase.OnPaint(e)
 		g.SetClip(rectTitle)
 		g.TranslateTransform(0, intTitleOffset)
 		MyBase.OnPaint(e)
+
+		'g.ExcludeClip(rectTitle)
+		'MyBase.OnPaint(e)
+		'g.SetClip(rectTitle)
+		'g.TranslateTransform(0, intTitleOffset)
+		'MyBase.OnPaint(e)
 	End Sub
 
 	Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
@@ -47,19 +67,16 @@ Public Class TitleShowingOnHoverMaterialForm
 		Dim intOffsetChange = 0
 		If blnAdd AndAlso intTitleOffset < 0 Then
 			intOffsetChange = Math.Min(0 - intTitleOffset, dblTitleTransitionRate60FPS)
-			intTitleOffset += intOffsetChange
-			Invalidate(rectTitle)
 		ElseIf Not blnAdd AndAlso intTitleOffset > -40 Then
 			intOffsetChange = -Math.Min(intTitleOffset + 40, dblTitleTransitionRate60FPS)
-			intTitleOffset += intOffsetChange
-			Invalidate(rectTitle)
 		End If
-		Update()
 
 		If intOffsetChange <> 0 Then
+			intTitleOffset += intOffsetChange
 			For Each picButton In arrAppBarButtons
 				picButton.TranslationY += intOffsetChange
 			Next
+			Refresh()
 		End If
 	End Sub
 

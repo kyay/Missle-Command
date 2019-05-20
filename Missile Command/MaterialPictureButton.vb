@@ -1,35 +1,41 @@
 ﻿Public Class MaterialPictureButton
-	Public ReadOnly Property OriginalTop() As Integer
+	Public ReadOnly Property OriginalTop As Integer
 		Get
 			Return Top - TranslationY
 		End Get
 	End Property
-	Public ReadOnly Property OriginalLeft() As Integer
+	Public ReadOnly Property OriginalLeft As Integer
 		Get
 			Return Left - TranslationX
 		End Get
 	End Property
 	Private _translationX As Integer
-	Public Property TranslationX() As Integer
+	Public Property TranslationX As Integer
 		Get
 			Return _translationX
 		End Get
 		Set(ByVal value As Integer)
-			'Left = OriginalLeft + value
 			_translationX = value
-			Invalidate()
+			Invalidate(True)
 		End Set
 	End Property
 	Private _translationY As Integer
-	Public Property TranslationY() As Integer
+
+	Public Sub New()
+		MyBase.New()
+		SetStyle(ControlStyles.UserPaint, True)
+		SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+		SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+		InitializeComponent()
+	End Sub
+
+	Public Property TranslationY As Integer
 		Get
 			Return _translationY
 		End Get
 		Set(ByVal value As Integer)
-			'Top = OriginalTop + value
 			_translationY = value
-			Invalidate()
-			Update()
+			Invalidate(True)
 		End Set
 	End Property
 
@@ -37,4 +43,12 @@
 		pe.Graphics.TranslateClip(TranslationX, TranslationY)
 		MyBase.OnPaint(pe)
 	End Sub
+
+	'Protected Overrides Sub WndProc(ByRef m As Message)
+	'	If m.Msg = &H14 Then 'WM_ERASEBKGND
+	'		m.Result = 0
+	'	Else
+	'		MyBase.WndProc(m)
+	'	End If
+	'End Sub
 End Class
