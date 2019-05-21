@@ -23,9 +23,6 @@
 
 	Public Sub New()
 		MyBase.New()
-		SetStyle(ControlStyles.UserPaint, True)
-		SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-		SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
 		InitializeComponent()
 	End Sub
 

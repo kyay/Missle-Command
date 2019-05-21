@@ -86,6 +86,7 @@
       <DependentUpon>Form1.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="MaterialMenuItemvb.vb" />
     <Compile Include="MaterialPictureButton.Designer.vb">
       <DependentUpon>MaterialPictureButton.vb</DependentUpon>
     </Compile>

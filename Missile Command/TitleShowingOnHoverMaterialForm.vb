@@ -13,10 +13,6 @@ Public Class TitleShowingOnHoverMaterialForm
 
 	Public Sub New()
 		MyBase.New()
-		SetStyle(ControlStyles.UserPaint, True)
-		SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-		SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-		SetStyle(ControlStyles.SupportsTransparentBackColor, True)
 		InitializeComponent()
 		AddHandler arrAppBarButtons.CollectionChanged,
 			Sub(sender As Object, notifyEvent As NotifyCollectionChangedEventArgs)
