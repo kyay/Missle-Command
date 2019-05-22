@@ -17,7 +17,7 @@ Public Class Form1
 		xmlDoc.Load(srmSettings)
 		image = SvgDocument.Open(xmlDoc)
 		srmSettings.Close()
-		arrAppBarButtons.Add(PictureBox1)
+		mnuAppBarMenuItems.Add(Nothing)
 	End Sub
 	Private Sub PictureBox1_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles PictureBox1.Paint
 		Dim ClientRect As Rectangle = PictureBox1.ClientRectangle

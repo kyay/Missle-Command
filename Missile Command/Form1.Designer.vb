@@ -24,7 +24,9 @@ Partial Class Form1
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
+		Me.components = New System.ComponentModel.Container()
 		Me.PictureBox1 = New Missile_Command.MaterialPictureButton()
+		Me.MaterialMenuItem1 = New Missile_Command.MaterialMenuItem(Me.components)
 		CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
 		Me.SuspendLayout()
 		'
@@ -41,6 +43,18 @@ Partial Class Form1
 		Me.PictureBox1.TranslationX = 0
 		Me.PictureBox1.TranslationY = 0
 		'
+		'MaterialMenuItem1
+		'
+		Me.MaterialMenuItem1.intHeight = 0
+		Me.MaterialMenuItem1.intLeft = 0
+		Me.MaterialMenuItem1.intTop = 0
+		Me.MaterialMenuItem1.intWidth = 0
+		Me.MaterialMenuItem1.mstMouseState = Missile_Command.MaterialMenuItem.MouseState.Down
+		Me.MaterialMenuItem1.pdgPadding = New System.Windows.Forms.Padding(0, 0, 0, 0)
+		Me.MaterialMenuItem1.rctBounds = New System.Drawing.Rectangle(0, 0, 0, 0)
+		Me.MaterialMenuItem1.svgImage = Nothing
+		Me.MaterialMenuItem1.svgImageFile = Nothing
+		'
 		'Form1
 		'
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -56,4 +70,5 @@ Partial Class Form1
 	End Sub
 
 	Friend WithEvents PictureBox1 As MaterialPictureButton
+	Friend WithEvents MaterialMenuItem1 As MaterialMenuItem
 End Class

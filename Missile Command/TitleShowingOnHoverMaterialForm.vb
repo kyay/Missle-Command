@@ -9,15 +9,15 @@ Public Class TitleShowingOnHoverMaterialForm
 	Private intTitleOffset = -40
 	Private rectTitle As Rectangle = New Rectangle(0, 24, 0, 40)
 	Private dblTitleTransitionRate60FPS As Double
-	Public arrAppBarButtons As ObservableCollection(Of MaterialPictureButton) = New ObservableCollection(Of MaterialPictureButton)
+	Public mnuAppBarMenuItems As ObservableCollection(Of MaterialMenuItem) = New ObservableCollection(Of MaterialMenuItem)
 
 	Public Sub New()
 		MyBase.New()
 		InitializeComponent()
-		AddHandler arrAppBarButtons.CollectionChanged,
+		AddHandler mnuAppBarMenuItems.CollectionChanged,
 			Sub(sender As Object, notifyEvent As NotifyCollectionChangedEventArgs)
-				For Each picButton As MaterialPictureButton In notifyEvent.NewItems
-					picButton.TranslationY = -40
+				For Each mnuItem As MaterialMenuItem In notifyEvent.NewItems
+					'mnuItem.TranslationY = -40
 				Next
 			End Sub
 	End Sub
@@ -69,9 +69,6 @@ Public Class TitleShowingOnHoverMaterialForm
 
 		If intOffsetChange <> 0 Then
 			intTitleOffset += intOffsetChange
-			For Each picButton In arrAppBarButtons
-				picButton.TranslationY += intOffsetChange
-			Next
 			Refresh()
 		End If
 	End Sub
@@ -81,4 +78,16 @@ Public Class TitleShowingOnHoverMaterialForm
 		dblTitleTransitionRate60FPS = 40 / (100 / tmrDisplaceTitle.Interval)
 		tmrDisplaceTitle.Start()
 	End Sub
+
+	Protected Overrides Sub OnResize(e As EventArgs)
+		MyBase.OnResize(e)
+
+		Dim intLastUsedLeft = (Width - SkinManager.FORM_PADDING / 2)
+		For Each mnuItem As MaterialMenuItem In mnuAppBarMenuItems
+			mnuItem.intLeft = intLastUsedLeft - mnuItem.intWidth
+			intLastUsedLeft = mnuItem.intLeft
+			mnuItem.intTop = 24 + (40 - mnuItem.intHeight) / 2
+		Next
+	End Sub
+
 End Class
