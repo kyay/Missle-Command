@@ -7,6 +7,7 @@ Public Class MaterialMenuItem
 	Public Enum MouseState
 		Down
 		Up
+		Hover
 	End Enum
 	Public Property pdgPadding As Padding
 	<Browsable(False)>
@@ -110,6 +111,11 @@ Public Class MaterialMenuItem
 		Dim btmImage = svgImage.Draw(rctOut.Width, rctOut.Height)
 		If btmImage IsNot Nothing Then
 			g.DrawImage(btmImage, rctOut)
+		End If
+		If mstMouseState = MouseState.Hover Then
+
+		ElseIf mstMouseState = MouseState.Down Then
+
 		End If
 	End Sub
 End Class

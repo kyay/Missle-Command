@@ -94,4 +94,16 @@ Public Class TitleShowingOnHoverMaterialForm
 		Next
 		Invalidate()
 	End Sub
+
+	Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+		MyBase.OnMouseDown(e)
+	End Sub
+
+	Protected Overrides Sub OnMouseLeave(e As EventArgs)
+		MyBase.OnMouseLeave(e)
+	End Sub
+
+	Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+		MyBase.OnMouseUp(e)
+	End Sub
 End Class
