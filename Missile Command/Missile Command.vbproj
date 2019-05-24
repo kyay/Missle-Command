@@ -79,6 +79,12 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComponentExposingMaterialForm.Designer.vb">
+      <DependentUpon>ComponentExposingMaterialForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentExposingMaterialForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>

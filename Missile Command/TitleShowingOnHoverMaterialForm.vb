@@ -1,5 +1,6 @@
 ﻿Imports System.Collections.ObjectModel
 Imports System.Collections.Specialized
+Imports System.ComponentModel
 Imports System.Drawing.Drawing2D
 Imports System.Reflection
 Imports MaterialSkin.Controls
@@ -11,37 +12,34 @@ Public Class TitleShowingOnHoverMaterialForm
 	Private dblTitleTransitionRate60FPS As Double
 	Public WithEvents mnuAppBarMenuItems As ObservableCollection(Of MaterialMenuItem) = New ObservableCollection(Of MaterialMenuItem)
 
+	Public Overrides ReadOnly Property cntComponents As IContainer
+		Get
+			Dim cntContainer = New Container()
+			For Each cmpComponent In components.Components
+				cntContainer.Add(cmpComponent)
+			Next
+			Return cntContainer
+		End Get
+	End Property
+
 	Public Sub New()
 		MyBase.New()
 		InitializeComponent()
 	End Sub
 
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
-		'Dim g = e.Graphics
-		'Dim test As Bitmap = New Bitmap(Width, Height)
-		'Dim g2 = Graphics.FromImage(test)
-		'Dim e2 = New PaintEventArgs(g2, e.ClipRectangle)
-		'g2.ExcludeClip(rectTitle)
-		'MyBase.OnPaint(e2)
-		'g2.SetClip(rectTitle)
-		'g2.TranslateTransform(0, intTitleOffset)
-		'MyBase.OnPaint(e2)
-
 		Dim g = e.Graphics
 		g.ExcludeClip(rectTitle)
 		MyBase.OnPaint(e)
 		g.SetClip(rectTitle)
+		If DesignMode Then
+			intTitleOffset = 0
+		End If
 		g.TranslateTransform(0, intTitleOffset)
 		MyBase.OnPaint(e)
 		For Each mnuItem In mnuAppBarMenuItems
 			mnuItem.Draw(g)
 		Next
-
-		'g.ExcludeClip(rectTitle)
-		'MyBase.OnPaint(e)
-		'g.SetClip(rectTitle)
-		'g.TranslateTransform(0, intTitleOffset)
-		'MyBase.OnPaint(e)
 	End Sub
 
 	Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
@@ -51,6 +49,17 @@ Public Class TitleShowingOnHoverMaterialForm
 		Else
 			blnAdd = False
 		End If
+		For Each mnuItem In mnuAppBarMenuItems
+			If mnuItem.rctBounds.Contains(e.Location) Then
+				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover
+				Invalidate()
+				Exit For
+			ElseIf mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover Then
+				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
+				Invalidate()
+			End If
+		Next
+		Update()
 	End Sub
 	Protected Overrides Sub OnSizeChanged(e As EventArgs)
 		MyBase.OnSizeChanged(e)
@@ -74,6 +83,11 @@ Public Class TitleShowingOnHoverMaterialForm
 		MyBase.OnLoad(e)
 		dblTitleTransitionRate60FPS = 40 / (100 / tmrDisplaceTitle.Interval)
 		tmrDisplaceTitle.Start()
+		For Each cmpComponent As IComponent In cntComponents.Components
+			If cmpComponent.GetType.IsAssignableFrom(GetType(MaterialMenuItem)) Then
+				mnuAppBarMenuItems.Add(cmpComponent)
+			End If
+		Next
 	End Sub
 
 	Protected Overrides Sub OnResize(e As EventArgs)
@@ -86,7 +100,7 @@ Public Class TitleShowingOnHoverMaterialForm
 	End Sub
 
 	Private Sub RelayoutAppBarMenuItems()
-		Dim intLastUsedLeft = Width - SkinManager.FORM_PADDING
+		Dim intLastUsedLeft = Width
 		For Each mnuItem As MaterialMenuItem In mnuAppBarMenuItems
 			mnuItem.intLeft = intLastUsedLeft - mnuItem.intWidth
 			intLastUsedLeft = mnuItem.intLeft
@@ -97,13 +111,36 @@ Public Class TitleShowingOnHoverMaterialForm
 
 	Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
 		MyBase.OnMouseDown(e)
+		For Each mnuItem In mnuAppBarMenuItems
+			If mnuItem.rctBounds.Contains(e.Location) Then
+				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Down
+				Invalidate()
+				Update()
+				Exit For
+			End If
+		Next
 	End Sub
 
 	Protected Overrides Sub OnMouseLeave(e As EventArgs)
 		MyBase.OnMouseLeave(e)
+		For Each mnuItem In mnuAppBarMenuItems
+			If mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover Then
+				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
+				Invalidate()
+			End If
+		Next
+		Update()
 	End Sub
 
 	Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
 		MyBase.OnMouseUp(e)
+		For Each mnuItem In mnuAppBarMenuItems
+			If mnuItem.rctBounds.Contains(e.Location) Then
+				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
+				Invalidate()
+				Update()
+				Exit For
+			End If
+		Next
 	End Sub
 End Class

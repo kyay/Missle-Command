@@ -13,19 +13,14 @@ Public Class MaterialMenuItem
 	<Browsable(False)>
 	Public Property svgImage As SvgDocument
 	Public Event Click()
-	Private _svgImageFileName As String
+
 	<Browsable(True)>
 	<Editor(GetType(ResourceFileDropDownListPropertyEditor), GetType(Drawing.Design.UITypeEditor))>
 	<Description("Resource name of the SVG image that you want to use")>
 	Public Property svgImageFileName() As String
-		Get
-			Return _svgImageFileName
-		End Get
-		Set(ByVal value As String)
-			_svgImageFileName = value
-		End Set
-	End Property
-	Private _mstMouseState As MouseState
+
+	Private _mstMouseState As MouseState = MouseState.Up
+	<Browsable(False)>
 	Public Property mstMouseState() As MouseState
 		Get
 			Return _mstMouseState
@@ -50,6 +45,7 @@ Public Class MaterialMenuItem
 			_rctbounds.Height = value.Height
 		End Set
 	End Property
+	<Browsable(False)>
 	Public Property intTop() As Integer
 		Get
 			Return _rctbounds.Y
@@ -58,6 +54,7 @@ Public Class MaterialMenuItem
 			_rctbounds.Y = value
 		End Set
 	End Property
+	<Browsable(False)>
 	Public Property intLeft() As Integer
 		Get
 			Return _rctbounds.X
@@ -66,6 +63,7 @@ Public Class MaterialMenuItem
 			_rctbounds.X = value
 		End Set
 	End Property
+	<Browsable(False)>
 	Public Property intWidth() As Integer
 		Get
 			Return _rctbounds.Width
@@ -74,6 +72,7 @@ Public Class MaterialMenuItem
 			_rctbounds.Width = value
 		End Set
 	End Property
+	<Browsable(False)>
 	Public Property intHeight() As Integer
 		Get
 			Return _rctbounds.Height
@@ -83,6 +82,7 @@ Public Class MaterialMenuItem
 		End Set
 	End Property
 	Public Sub Draw(ByRef g As Graphics)
+		Dim SkinManager = MaterialSkin.MaterialSkinManager.Instance
 		If Not String.IsNullOrEmpty(svgImageFileName) AndAlso svgImage Is Nothing Then
 			Dim runTimeResourceSet As Resources.ResourceSet = My.Resources.ResourceManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, True, True)
 			Dim svgImageFile As Byte() = runTimeResourceSet.GetObject(svgImageFileName)
@@ -91,7 +91,7 @@ Public Class MaterialMenuItem
 				xmlDoc.Load(srmImage)
 				svgImage = SvgDocument.Open(xmlDoc)
 
-				Dim clrTextColor = MaterialSkin.MaterialSkinManager.Instance.ColorScheme.TextColor
+				Dim clrTextColor = SkinManager.ColorScheme.TextColor
 				Dim clrIconColor = DirectCast(svgImage.Color, SvgColourServer).Colour
 				Dim intAlpha = 0.5
 
@@ -107,15 +107,14 @@ Public Class MaterialMenuItem
 		rctOut.Width -= pdgPadding.Horizontal
 		rctOut.Height -= pdgPadding.Vertical
 
-
 		Dim btmImage = svgImage.Draw(rctOut.Width, rctOut.Height)
 		If btmImage IsNot Nothing Then
 			g.DrawImage(btmImage, rctOut)
 		End If
 		If mstMouseState = MouseState.Hover Then
-
+			g.FillRectangle(SkinManager.GetFlatButtonHoverBackgroundBrush(), rctBounds)
 		ElseIf mstMouseState = MouseState.Down Then
-
+			g.FillRectangle(SkinManager.GetFlatButtonPressedBackgroundBrush(), rctBounds)
 		End If
 	End Sub
 End Class
