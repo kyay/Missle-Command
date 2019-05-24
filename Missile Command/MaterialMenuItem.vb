@@ -1,4 +1,5 @@
 ﻿Imports System.ComponentModel
+Imports System.ComponentModel.Design
 Imports System.IO
 Imports System.Xml
 Imports Svg
@@ -10,6 +11,7 @@ Public Class MaterialMenuItem
 		Hover
 	End Enum
 	Public Property pdgPadding As Padding
+	<DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)>
 	<Browsable(False)>
 	Public Property svgImage As SvgDocument
 	Public Event Click()
@@ -81,6 +83,24 @@ Public Class MaterialMenuItem
 			_rctbounds.Height = value
 		End Set
 	End Property
+
+	Public Overrides Property Site As ISite
+		Get
+			Return MyBase.Site
+		End Get
+		Set(value As ISite)
+			MyBase.Site = value
+			If DesignMode AndAlso value IsNot Nothing Then
+				Dim dshHost As IDesignerHost = value.GetService(GetType(IDesignerHost))
+				If dshHost IsNot Nothing Then
+					If dshHost.RootComponent.GetType.IsAssignableFrom(GetType(TitleShowingOnHoverMaterialForm)) Then
+						CType(dshHost.RootComponent, TitleShowingOnHoverMaterialForm).mnuAppBarMenuItems.Add(Me)
+					End If
+				End If
+			End If
+		End Set
+	End Property
+
 	Public Sub Draw(ByRef g As Graphics)
 		Dim SkinManager = MaterialSkin.MaterialSkinManager.Instance
 		If Not String.IsNullOrEmpty(svgImageFileName) AndAlso svgImage Is Nothing Then

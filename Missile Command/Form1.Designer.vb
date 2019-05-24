@@ -31,13 +31,12 @@ Partial Class Form1
 		'MaterialMenuItem1
 		'
 		Me.MaterialMenuItem1.intHeight = 40
-		Me.MaterialMenuItem1.intLeft = 0
-		Me.MaterialMenuItem1.intTop = 0
+		Me.MaterialMenuItem1.intLeft = 760
+		Me.MaterialMenuItem1.intTop = 24
 		Me.MaterialMenuItem1.intWidth = 40
 		Me.MaterialMenuItem1.mstMouseState = Missile_Command.MaterialMenuItem.MouseState.Up
 		Me.MaterialMenuItem1.pdgPadding = New System.Windows.Forms.Padding(8)
-		Me.MaterialMenuItem1.rctBounds = New System.Drawing.Rectangle(0, 0, 40, 40)
-		Me.MaterialMenuItem1.svgImage = Nothing
+		Me.MaterialMenuItem1.rctBounds = New System.Drawing.Rectangle(760, 24, 40, 40)
 		Me.MaterialMenuItem1.svgImageFileName = "baseline_settings_20px"
 		'
 		'Form1
