@@ -9,17 +9,11 @@ Public Class TitleShowingOnHoverMaterialForm
 	Private intTitleOffset = -40
 	Private rectTitle As Rectangle = New Rectangle(0, 24, 0, 40)
 	Private dblTitleTransitionRate60FPS As Double
-	Public mnuAppBarMenuItems As ObservableCollection(Of MaterialMenuItem) = New ObservableCollection(Of MaterialMenuItem)
+	Public WithEvents mnuAppBarMenuItems As ObservableCollection(Of MaterialMenuItem) = New ObservableCollection(Of MaterialMenuItem)
 
 	Public Sub New()
 		MyBase.New()
 		InitializeComponent()
-		AddHandler mnuAppBarMenuItems.CollectionChanged,
-			Sub(sender As Object, notifyEvent As NotifyCollectionChangedEventArgs)
-				For Each mnuItem As MaterialMenuItem In notifyEvent.NewItems
-					'mnuItem.TranslationY = -40
-				Next
-			End Sub
 	End Sub
 
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
@@ -39,6 +33,9 @@ Public Class TitleShowingOnHoverMaterialForm
 		g.SetClip(rectTitle)
 		g.TranslateTransform(0, intTitleOffset)
 		MyBase.OnPaint(e)
+		For Each mnuItem In mnuAppBarMenuItems
+			mnuItem.Draw(g)
+		Next
 
 		'g.ExcludeClip(rectTitle)
 		'MyBase.OnPaint(e)
@@ -81,13 +78,20 @@ Public Class TitleShowingOnHoverMaterialForm
 
 	Protected Overrides Sub OnResize(e As EventArgs)
 		MyBase.OnResize(e)
+		RelayoutAppBarMenuItems()
+	End Sub
 
-		Dim intLastUsedLeft = (Width - SkinManager.FORM_PADDING / 2)
+	Private Sub mnuAppBarMenuItems_CollectionChanged(sender As Object, e As NotifyCollectionChangedEventArgs) Handles mnuAppBarMenuItems.CollectionChanged
+		RelayoutAppBarMenuItems()
+	End Sub
+
+	Private Sub RelayoutAppBarMenuItems()
+		Dim intLastUsedLeft = Width - SkinManager.FORM_PADDING
 		For Each mnuItem As MaterialMenuItem In mnuAppBarMenuItems
 			mnuItem.intLeft = intLastUsedLeft - mnuItem.intWidth
 			intLastUsedLeft = mnuItem.intLeft
-			mnuItem.intTop = 24 + (40 - mnuItem.intHeight) / 2
+			mnuItem.intTop = 24 + ((40 - mnuItem.intHeight) / 2)
 		Next
+		Invalidate()
 	End Sub
-
 End Class

@@ -12,26 +12,7 @@ Public Class Form1
 		SkinManager.AddFormToManage(Me)
 		SkinManager.Theme = MaterialSkinManager.Themes.LIGHT
 		SkinManager.ColorScheme = New ColorScheme(Primary.BlueGrey800, Primary.BlueGrey900, Primary.BlueGrey500, Accent.LightBlue200, TextShade.WHITE)
-		Dim srmSettings As Stream = New MemoryStream(My.Resources.baseline_settings_20px)
-		Dim xmlDoc = New XmlDocument()
-		xmlDoc.Load(srmSettings)
-		image = SvgDocument.Open(xmlDoc)
-		srmSettings.Close()
-		mnuAppBarMenuItems.Add(Nothing)
+		SkinManager.FORM_PADDING = 8
+		mnuAppBarMenuItems.Add(MaterialMenuItem1)
 	End Sub
-	Private Sub PictureBox1_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles PictureBox1.Paint
-		Dim ClientRect As Rectangle = PictureBox1.ClientRectangle
-		ClientRect.X += PictureBox1.Padding.Left
-		ClientRect.Y += PictureBox1.Padding.Top
-		ClientRect.Width -= PictureBox1.Padding.Horizontal
-		ClientRect.Height -= PictureBox1.Padding.Vertical
-		Dim btmImage = image.Draw(ClientRect.Width, ClientRect.Height)
-		btmImage.MakeTransparent()
-		e.Graphics.DrawImage(btmImage, ClientRect)
-	End Sub
-
-	Private Sub PictureBox1_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PictureBox1.Resize
-		PictureBox1.Invalidate()
-	End Sub
-	Private image As SvgDocument
 End Class

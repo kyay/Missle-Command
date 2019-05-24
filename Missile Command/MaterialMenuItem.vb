@@ -9,19 +9,19 @@ Public Class MaterialMenuItem
 		Up
 	End Enum
 	Public Property pdgPadding As Padding
+	<Browsable(False)>
 	Public Property svgImage As SvgDocument
-	Private _svgImageFile As Stream
-	Public Property svgImageFile() As 
+	Public Event Click()
+	Private _svgImageFileName As String
+	<Browsable(True)>
+	<Editor(GetType(ResourceFileDropDownListPropertyEditor), GetType(Drawing.Design.UITypeEditor))>
+	<Description("Resource name of the SVG image that you want to use")>
+	Public Property svgImageFileName() As String
 		Get
-			Return _svgImageFile
+			Return _svgImageFileName
 		End Get
-		Set(ByVal value As Stream)
-			_svgImageFile = value
-			If svgImageFile IsNot Nothing Then
-				Dim xmlDoc = New XmlDocument()
-				xmlDoc.Load(svgImageFile)
-				svgImage = SvgDocument.Open(xmlDoc)
-			End If
+		Set(ByVal value As String)
+			_svgImageFileName = value
 		End Set
 	End Property
 	Private _mstMouseState As MouseState
@@ -32,7 +32,9 @@ Public Class MaterialMenuItem
 		Set(ByVal value As MouseState)
 			Dim mstPreviousMouseState = mstMouseState
 			_mstMouseState = value
-
+			If mstPreviousMouseState = MouseState.Down AndAlso mstMouseState = MouseState.Up Then
+				RaiseEvent Click()
+			End If
 		End Set
 	End Property
 	Private _rctbounds As Rectangle
@@ -80,13 +82,34 @@ Public Class MaterialMenuItem
 		End Set
 	End Property
 	Public Sub Draw(ByRef g As Graphics)
+		If Not String.IsNullOrEmpty(svgImageFileName) AndAlso svgImage Is Nothing Then
+			Dim runTimeResourceSet As Resources.ResourceSet = My.Resources.ResourceManager.GetResourceSet(System.Globalization.CultureInfo.CurrentCulture, True, True)
+			Dim svgImageFile As Byte() = runTimeResourceSet.GetObject(svgImageFileName)
+			Using srmImage = New MemoryStream(svgImageFile)
+				Dim xmlDoc = New XmlDocument()
+				xmlDoc.Load(srmImage)
+				svgImage = SvgDocument.Open(xmlDoc)
+
+				Dim clrTextColor = MaterialSkin.MaterialSkinManager.Instance.ColorScheme.TextColor
+				Dim clrIconColor = DirectCast(svgImage.Color, SvgColourServer).Colour
+				Dim intAlpha = 0.5
+
+				DirectCast(svgImage.Color, SvgColourServer).Colour = Color.FromArgb(
+					  (clrIconColor.R * intAlpha) + clrTextColor.R * (1 - intAlpha),
+					(clrIconColor.G * intAlpha) + clrTextColor.G * (1 - intAlpha),
+					(clrIconColor.B * intAlpha) + clrTextColor.B * (1 - intAlpha))
+			End Using
+		End If
 		Dim rctOut As Rectangle = rctBounds
 		rctOut.X += pdgPadding.Left
 		rctOut.Y += pdgPadding.Top
 		rctOut.Width -= pdgPadding.Horizontal
 		rctOut.Height -= pdgPadding.Vertical
+
+
 		Dim btmImage = svgImage.Draw(rctOut.Width, rctOut.Height)
-		btmImage.MakeTransparent()
-		g.DrawImage(btmImage, rctOut)
+		If btmImage IsNot Nothing Then
+			g.DrawImage(btmImage, rctOut)
+		End If
 	End Sub
 End Class
