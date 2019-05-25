@@ -24,7 +24,7 @@ Public Class Form1
 			For Each cmpComponent In components.Components
 				cntContainer.Add(cmpComponent)
 			Next
-			cntContainer.Add(MaterialMenuItem1)
+			cntContainer.Add(mmiSettings)
 			Return cntContainer
 		End Get
 	End Property

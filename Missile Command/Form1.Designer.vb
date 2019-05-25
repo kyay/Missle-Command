@@ -25,19 +25,19 @@ Partial Class Form1
 	<System.Diagnostics.DebuggerStepThrough()>
 	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
-		Me.MaterialMenuItem1 = New Missile_Command.MaterialMenuItem(Me.components)
+		Me.mmiSettings = New Missile_Command.MaterialMenuItem(Me.components)
 		Me.SuspendLayout()
 		'
-		'MaterialMenuItem1
+		'mmiSettings
 		'
-		Me.MaterialMenuItem1.intHeight = 40
-		Me.MaterialMenuItem1.intLeft = 760
-		Me.MaterialMenuItem1.intTop = 24
-		Me.MaterialMenuItem1.intWidth = 40
-		Me.MaterialMenuItem1.mstMouseState = Missile_Command.MaterialMenuItem.MouseState.Up
-		Me.MaterialMenuItem1.pdgPadding = New System.Windows.Forms.Padding(8)
-		Me.MaterialMenuItem1.rctBounds = New System.Drawing.Rectangle(760, 24, 40, 40)
-		Me.MaterialMenuItem1.svgImageFileName = "baseline_settings_20px"
+		Me.mmiSettings.intHeight = 40
+		Me.mmiSettings.intLeft = 760
+		Me.mmiSettings.intTop = 24
+		Me.mmiSettings.intWidth = 40
+		Me.mmiSettings.mstMouseState = Missile_Command.MaterialMenuItem.MouseState.Up
+		Me.mmiSettings.pdgPadding = New System.Windows.Forms.Padding(8)
+		Me.mmiSettings.rctBounds = New System.Drawing.Rectangle(760, 24, 40, 40)
+		Me.mmiSettings.svgImageFileName = "baseline_settings_20px"
 		'
 		'Form1
 		'
@@ -46,9 +46,9 @@ Partial Class Form1
 		Me.BackColor = System.Drawing.Color.Black
 		Me.ClientSize = New System.Drawing.Size(800, 450)
 		Me.Name = "Form1"
-		Me.Text = "Test"
+		Me.Text = "Missile Command"
 		Me.ResumeLayout(False)
 
 	End Sub
-	Friend WithEvents MaterialMenuItem1 As MaterialMenuItem
+	Friend WithEvents mmiSettings As MaterialMenuItem
 End Class

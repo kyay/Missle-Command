@@ -11,7 +11,7 @@ Public Class MaterialMenuItem
 		Hover
 	End Enum
 	Public Property pdgPadding As Padding
-	<DesignerSerializationVisibilityAttribute(DesignerSerializationVisibility.Hidden)>
+	<DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)>
 	<Browsable(False)>
 	Public Property svgImage As SvgDocument
 	Public Event Click()
