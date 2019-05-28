@@ -98,6 +98,12 @@
     <Compile Include="MaterialMenuItem.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="MissileSiloPictureBox.Designer.vb">
+      <DependentUpon>MissileSiloPictureBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="MissileSiloPictureBox.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -153,6 +159,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\baseline-settings-20px.wmf" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Crosshair.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Ammo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
