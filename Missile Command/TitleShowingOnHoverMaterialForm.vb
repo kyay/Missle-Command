@@ -52,12 +52,12 @@ Public Class TitleShowingOnHoverMaterialForm
 		For Each mnuItem In mnuAppBarMenuItems
 			If mnuItem.rctBounds.Contains(e.Location) Then
 				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover
-				Invalidate()
-				Exit For
+                Invalidate(False)
+                Exit For
 			ElseIf mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover Then
 				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
-				Invalidate()
-			End If
+                Invalidate(False)
+            End If
 		Next
 		Update()
 	End Sub
@@ -75,8 +75,9 @@ Public Class TitleShowingOnHoverMaterialForm
 
 		If intOffsetChange <> 0 Then
 			intTitleOffset += intOffsetChange
-			Refresh()
-		End If
+            Invalidate(False)
+            Update()
+        End If
 	End Sub
 
 	Protected Overrides Sub OnLoad(e As EventArgs)
@@ -106,16 +107,16 @@ Public Class TitleShowingOnHoverMaterialForm
 			intLastUsedLeft = mnuItem.intLeft
 			mnuItem.intTop = 24 + ((40 - mnuItem.intHeight) / 2)
 		Next
-		Invalidate()
-	End Sub
+        Invalidate(False)
+    End Sub
 
 	Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
 		MyBase.OnMouseDown(e)
 		For Each mnuItem In mnuAppBarMenuItems
 			If mnuItem.rctBounds.Contains(e.Location) Then
 				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Down
-				Invalidate()
-				Update()
+                Invalidate(False)
+                Update()
 				Exit For
 			End If
 		Next
@@ -126,8 +127,8 @@ Public Class TitleShowingOnHoverMaterialForm
 		For Each mnuItem In mnuAppBarMenuItems
 			If mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover Then
 				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
-				Invalidate()
-			End If
+                Invalidate(False)
+            End If
 		Next
 		Update()
 	End Sub
@@ -137,8 +138,8 @@ Public Class TitleShowingOnHoverMaterialForm
 		For Each mnuItem In mnuAppBarMenuItems
 			If mnuItem.rctBounds.Contains(e.Location) Then
 				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
-				Invalidate()
-				Update()
+                Invalidate(False)
+                Update()
 				Exit For
 			End If
 		Next

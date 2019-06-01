@@ -85,6 +85,12 @@
     <Compile Include="ComponentExposingMaterialForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DrawingOnParentPictureBox.Designer.vb">
+      <DependentUpon>DrawingOnParentPictureBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DrawingOnParentPictureBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>
