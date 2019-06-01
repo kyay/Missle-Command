@@ -98,10 +98,10 @@
     <Compile Include="MaterialMenuItem.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MissileSiloPictureBox.Designer.vb">
-      <DependentUpon>MissileSiloPictureBox.vb</DependentUpon>
+    <Compile Include="MissileSilo.Designer.vb">
+      <DependentUpon>MissileSilo.vb</DependentUpon>
     </Compile>
-    <Compile Include="MissileSiloPictureBox.vb">
+    <Compile Include="MissileSilo.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -130,6 +130,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MissileSilo.resx">
+      <DependentUpon>MissileSilo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
