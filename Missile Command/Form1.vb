@@ -34,9 +34,28 @@ Public Class Form1
 		Get
 			Return MyBase.Cursor
 		End Get
-		Set(value As Cursor)
-			'Force the cursor to be the crosshair
-			MyBase.Cursor = New Cursor(New Bitmap(My.Resources.Crosshair, CROSSHAIR_DIMEN, CROSSHAIR_DIMEN).GetHicon())
-		End Set
-	End Property
+        Set(value As Cursor)
+            'Force the cursor to be the crosshair
+            'MyBase.Cursor = value
+            MyBase.Cursor = New Cursor(New Bitmap(My.Resources.Crosshair, CROSSHAIR_DIMEN, CROSSHAIR_DIMEN).GetHicon())
+        End Set
+    End Property
+
+    Private Sub Form1_KeyDown(sender As Object, e As KeyEventArgs) Handles Me.KeyDown
+        Me.Cursor = New Cursor(Cursor.Current.Handle)
+        Select Case e.KeyCode
+            Case Keys.Up
+                Cursor.Position = New Point(MousePosition.X, MousePosition.Y - 5)
+            Case Keys.Down
+                Cursor.Position = New Point(MousePosition.X, MousePosition.Y + 5)
+            Case Keys.Left
+                Cursor.Position = New Point(MousePosition.X - 5, MousePosition.Y)
+            Case Keys.Right
+                Cursor.Position = New Point(MousePosition.X + 5, MousePosition.Y)
+        End Select
+        Refresh()
+    End Sub
+    Protected Overrides Function IsInputKey(keyData As Keys) As Boolean
+        Return MyBase.IsInputKey(keyData) Or keyData = Keys.Up Or keyData = Keys.Down Or keyData = Keys.Right Or keyData = Keys.Left
+    End Function
 End Class
