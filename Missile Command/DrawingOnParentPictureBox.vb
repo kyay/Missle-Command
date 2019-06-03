@@ -13,11 +13,11 @@ Public Class DrawingOnParentPictureBox
 		End Set
 	End Property
 
-	Public Sub ActualOnPaint(pe As PaintEventArgs) Implements IDrawsOnParent.ActualOnPaint
-		MyBase.OnPaint(pe)
-	End Sub
+    Public Overridable Sub ActualOnPaint(pe As PaintEventArgs) Implements IDrawsOnParent.ActualOnPaint
+        MyBase.OnPaint(pe)
+    End Sub
 
-	Protected Overrides Sub OnPaint(e As PaintEventArgs)
+    Protected Overrides Sub OnPaint(e As PaintEventArgs)
 		If Not blnShouldLetParentDraw OrElse DesignMode Then
 			ActualOnPaint(e)
 		End If

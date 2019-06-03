@@ -22,12 +22,12 @@
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
 		MyBase.OnPaint(e)
 		For Each cntControl As Control In Controls
-			If TypeOf cntControl Is IDrawsOnParent AndAlso cntControl.Visible Then
-				Dim g As Graphics = e.Graphics
-				g.TranslateTransform(cntControl.Left, cntControl.Top)
-				CType(cntControl, IDrawsOnParent).ActualOnPaint(New PaintEventArgs(g, cntControl.DisplayRectangle))
-				g.TranslateTransform(-cntControl.Left, -cntControl.Top)
-			End If
-		Next
+            If TypeOf cntControl Is IDrawsOnParent AndAlso cntControl.Visible AndAlso CType(cntControl, IDrawsOnParent).blnShouldLetParentDraw Then
+                Dim g As Graphics = e.Graphics
+                g.TranslateTransform(cntControl.Left, cntControl.Top)
+                CType(cntControl, IDrawsOnParent).ActualOnPaint(New PaintEventArgs(g, cntControl.DisplayRectangle))
+                g.TranslateTransform(-cntControl.Left, -cntControl.Top)
+            End If
+        Next
 	End Sub
 End Class

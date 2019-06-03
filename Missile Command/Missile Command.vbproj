@@ -64,6 +64,7 @@
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -105,6 +106,12 @@
     <Compile Include="MaterialMenuItem.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Missile.Designer.vb">
+      <DependentUpon>Missile.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Missile.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MissileSilo.Designer.vb">
       <DependentUpon>MissileSilo.vb</DependentUpon>
     </Compile>
@@ -137,6 +144,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Missile.resx">
+      <DependentUpon>Missile.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MissileSilo.resx">
       <DependentUpon>MissileSilo.vb</DependentUpon>

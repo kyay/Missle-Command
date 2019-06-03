@@ -28,8 +28,10 @@ Public Class TitleShowingOnHoverMaterialForm
 	End Sub
 
 	Protected Overrides Sub OnPaint(e As PaintEventArgs)
-		Dim g = e.Graphics
-		g.ExcludeClip(rectTitle)
+        Dim g = e.Graphics
+        Dim rgnOldClip = g.Clip.Clone
+        Dim rgnOldTransform = g.Transform.Clone
+        g.ExcludeClip(rectTitle)
 		MyBase.OnPaint(e)
 		g.SetClip(rectTitle)
 		If DesignMode Then
@@ -37,10 +39,12 @@ Public Class TitleShowingOnHoverMaterialForm
 		End If
 		g.TranslateTransform(0, intTitleOffset)
 		MyBase.OnPaint(e)
-		For Each mnuItem In mnuAppBarMenuItems
-			mnuItem.Draw(g)
-		Next
-	End Sub
+        For Each mnuItem In mnuAppBarMenuItems
+            mnuItem.Draw(g)
+        Next
+        g.Clip = rgnOldClip
+        g.Transform = rgnOldTransform
+    End Sub
 
 	Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
 		MyBase.OnMouseMove(e)
@@ -110,19 +114,20 @@ Public Class TitleShowingOnHoverMaterialForm
         Invalidate(False)
     End Sub
 
-	Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
-		MyBase.OnMouseDown(e)
-		For Each mnuItem In mnuAppBarMenuItems
-			If mnuItem.rctBounds.Contains(e.Location) Then
-				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Down
+    Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
+        For Each mnuItem In mnuAppBarMenuItems
+            If mnuItem.rctBounds.Contains(e.Location) Then
+                mnuItem.mstMouseState = MaterialMenuItem.MouseState.Down
                 Invalidate(False)
                 Update()
-				Exit For
-			End If
-		Next
-	End Sub
+                'We already consumed the Mouse down, no need for the base class to know that there was even a down (shhh)
+                Exit Sub
+            End If
+        Next
+        MyBase.OnMouseDown(e)
+    End Sub
 
-	Protected Overrides Sub OnMouseLeave(e As EventArgs)
+    Protected Overrides Sub OnMouseLeave(e As EventArgs)
 		MyBase.OnMouseLeave(e)
 		For Each mnuItem In mnuAppBarMenuItems
 			If mnuItem.mstMouseState = MaterialMenuItem.MouseState.Hover Then
@@ -133,15 +138,16 @@ Public Class TitleShowingOnHoverMaterialForm
 		Update()
 	End Sub
 
-	Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
-		MyBase.OnMouseUp(e)
-		For Each mnuItem In mnuAppBarMenuItems
-			If mnuItem.rctBounds.Contains(e.Location) Then
-				mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
+    Protected Overrides Sub OnMouseUp(e As MouseEventArgs)
+        For Each mnuItem In mnuAppBarMenuItems
+            If mnuItem.rctBounds.Contains(e.Location) Then
+                mnuItem.mstMouseState = MaterialMenuItem.MouseState.Up
                 Invalidate(False)
                 Update()
-				Exit For
-			End If
-		Next
-	End Sub
+                'We already consumed the Mouse Up, no need for the base class to know that there was even an up (shhh)
+                Exit Sub
+            End If
+        Next
+        MyBase.OnMouseUp(e)
+    End Sub
 End Class
